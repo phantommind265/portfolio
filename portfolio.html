@@ -1,0 +1,532 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio • Hopeson Chikuse</title>
+  <meta name="description" content="Modern, responsive developer portfolio built with TailwindCSS." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Plus Jakarta Sans", "ui-sans-serif", "system-ui"],
+          },
+          colors: {
+            brand: {
+              50: '#eef8ff', 100:'#d8edff', 200:'#b8deff', 300:'#88c9ff', 400:'#4eacff', 500:'#1e90ff', 600:'#0f77db', 700:'#0b5eb0', 800:'#0c4c8c', 900:'#0f3f73'
+            }
+          },
+          boxShadow: {
+            soft: '0 10px 30px -10px rgba(0,0,0,0.25)'
+          },
+          keyframes: {
+            float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-8px)' } },
+            blob: {
+              '0%': { transform: 'translate(0px, 0px) scale(1)' },
+              '33%': { transform: 'translate(20px, -30px) scale(1.05)' },
+              '66%': { transform: 'translate(-10px, 20px) scale(0.98)' },
+              '100%': { transform: 'translate(0px, 0px) scale(1)' }
+            }
+          },
+          animation: {
+            float: 'float 6s ease-in-out infinite',
+            blob: 'blob 14s ease-in-out infinite'
+          }
+        }
+      },
+      darkMode: 'class'
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .glass { background: rgba(255,255,255,0.7); backdrop-filter: blur(10px); }
+    .dark .glass { background: rgba(17,24,39,0.6); }
+    .container-pad { padding-left: clamp(1rem, 5vw, 2rem); padding-right: clamp(1rem, 5vw, 2rem); }
+  </style>
+</head>
+<body class="bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-100">
+  <!-- Decorative background blobs -->
+  <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute -top-24 -right-32 h-72 w-72 rounded-full bg-brand-400/40 blur-3xl animate-blob"></div>
+    <div class="absolute top-1/2 -left-24 h-80 w-80 rounded-full bg-fuchsia-400/30 blur-3xl animate-blob" style="animation-delay: -4s"></div>
+    <div class="absolute bottom-0 right-1/3 h-64 w-64 rounded-full bg-emerald-400/30 blur-3xl animate-blob" style="animation-delay: -8s"></div>
+  </div>  <!-- Header -->  <header class="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-slate-900/50">
+    <nav class="container-pad mx-auto max-w-7xl flex items-center justify-between py-3">
+      <a href="#home" class="flex items-center gap-2">
+        <span class="inline-grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-fuchsia-500 text-white font-extrabold shadow-soft">HC</span>
+        <span class="font-semibold tracking-tight">Hopeson Chikuse</span>
+      </a><button id="mobileToggle" class="md:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Toggle menu">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
+
+  <ul id="navMenu" class="hidden md:flex items-center gap-6 text-sm">
+    <li><a class="nav-link hover:text-brand-600" href="#about">About</a></li>
+    <li><a class="nav-link hover:text-brand-600" href="#skills">Skills</a></li>
+    <li><a class="nav-link hover:text-brand-600" href="#projects">Projects</a></li>
+    <li><a class="nav-link hover:text-brand-600" href="#experience">Experience</a></li>
+    <li><a class="nav-link hover:text-brand-600" href="#contact">Contact</a></li>
+    <li>
+      <a href="#" class="inline-flex items-center gap-2 rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 py-2 font-medium shadow-soft">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16l4-4h6a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Z"/></svg>
+        Resume
+      </a>
+    </li>
+    <li>
+      <button id="themeToggle" class="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Toggle dark mode">
+        <span id="themeIcon"></span>
+      </button>
+    </li>
+  </ul>
+</nav>
+
+<!-- Mobile menu -->
+<div id="mobileMenu" class="md:hidden hidden border-t border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur">
+  <ul class="container-pad mx-auto max-w-7xl py-3 grid grid-cols-2 gap-3 text-sm">
+    <li><a class="block rounded-lg px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" href="#about">About</a></li>
+    <li><a class="block rounded-lg px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" href="#skills">Skills</a></li>
+    <li><a class="block rounded-lg px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" href="#projects">Projects</a></li>
+    <li><a class="block rounded-lg px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" href="#experience">Experience</a></li>
+    <li><a class="block rounded-lg px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" href="#contact">Contact</a></li>
+    <li><button id="themeToggleM" class="w-full text-left rounded-lg px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800">Toggle Theme</button></li>
+  </ul>
+</div>
+
+  </header>  <!-- Hero -->  <section id="home" class="relative">
+    <div class="container-pad mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-10 items-center py-20 md:py-28">
+      <div>
+        <div class="inline-flex items-center gap-2 rounded-full border border-slate-200 dark:border-slate-800 px-3 py-1 text-xs text-slate-500 mb-4">
+          <span class="inline-block h-2 w-2 rounded-full bg-emerald-500"></span>
+          Available for freelance & remote roles
+        </div>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
+          Hi, I'm <span class="bg-gradient-to-r from-brand-600 to-fuchsia-600 bg-clip-text text-transparent">Hopeson Chikuse</span> —
+          <span class="block">Full‑Stack Developer</span>
+        </h1>
+        <p class="mt-5 text-slate-600 dark:text-slate-300 max-w-xl">
+          I craft delightful, performant web apps with a focus on clean UX, accessibility, and real-world impact.
+        </p>
+        <div class="mt-7 flex flex-wrap items-center gap-3">
+          <a href="#contact" class="inline-flex items-center gap-2 rounded-xl bg-brand-600 text-white px-5 py-3 font-semibold shadow-soft">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v.511l-10 5.714L2 6.51V6Zm0 3.287V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9.287l-9.392 5.37a2 2 0 0 1-2.216 0L2 9.287Z"/></svg>
+            Hire Me
+          </a>
+          <a href="#projects" class="inline-flex items-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 px-5 py-3 font-semibold">
+            View Projects
+          </a>
+        </div>
+        <div class="mt-10 flex items-center gap-6 text-sm text-slate-500">
+          <div class="flex items-center gap-2"><span class="text-xl">✨</span><span>2+ yrs experience</span></div>
+          <div class="flex items-center gap-2"><span class="text-xl">🚀</span><span>30+ projects</span></div>
+          <div class="flex items-center gap-2"><span class="text-xl">🌍</span><span>Remote friendly</span></div>
+        </div>
+      </div>
+      <div class="relative">
+        <div class="absolute -inset-4 -z-10 rounded-[2rem] bg-gradient-to-br from-brand-500/20 to-fuchsia-500/20 blur-2xl"></div>
+        <div class="mx-auto max-w-sm">
+          <div class="relative rounded-[2rem] p-1 bg-gradient-to-br from-brand-500 to-fuchsia-500 shadow-soft">
+            <div class="rounded-[1.7rem] bg-white dark:bg-slate-900 p-6">
+              <img src="IMG_20250901_220212.jpg" alt="Profile" class="h-72 w-full object-cover rounded-2xl" />
+              <div class="mt-4 grid grid-cols-3 gap-3 text-center text-xs">
+                <div class="glass rounded-xl p-3"><div class="text-2xl font-bold">JS</div><div class="text-slate-500">JavaScript</div></div>
+                <div class="glass rounded-xl p-3"><div class="text-2xl font-bold">PY</div><div class="text-slate-500">Python</div></div>
+                <div class="glass rounded-xl p-3"><div class="text-2xl font-bold">DB</div><div class="text-slate-500">SQL</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>  <!-- About -->  <section id="about" class="py-20">
+    <div class="container-pad mx-auto max-w-7xl grid md:grid-cols-2 gap-12 items-center">
+      <div class="order-2 md:order-1">
+        <h2 class="text-3xl font-extrabold tracking-tight">About Me</h2>
+        <p class="mt-4 text-slate-600 dark:text-slate-300">
+          I'm a developer who loves building products end-to-end: from idea and design to backend, frontend, and deployment. I prioritize DX, performance, and maintainable code.
+        </p>
+        <ul class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+          <li class="glass rounded-xl p-4"><span class="font-semibold">Location:</span> Lilongwe, MW</li>
+          <li class="glass rounded-xl p-4"><span class="font-semibold">Timezone:</span> GMT+2</li>
+          <li class="glass rounded-xl p-4"><span class="font-semibold">Freelance:</span> Available</li>
+          <li class="glass rounded-xl p-4"><span class="font-semibold">Languages:</span> EN, Chichewa</li>
+        </ul>
+        <div class="mt-6 flex gap-3">
+          <a href="#contact" class="rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-5 py-3 font-semibold shadow-soft">Let's work together</a>
+          <a href="#" class="rounded-xl border border-slate-300 dark:border-slate-700 px-5 py-3 font-semibold">Download CV</a>
+        </div>
+      </div>
+      <div class="order-1 md:order-2">
+        <div class="relative mx-auto max-w-md">
+          <div class="absolute -inset-6 -z-10 rounded-3xl bg-gradient-to-tr from-emerald-500/20 to-brand-500/20 blur-2xl"></div>
+          <img class="rounded-3xl shadow-soft" src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1600&auto=format&fit=crop" alt="Work setup" />
+        </div>
+      </div>
+    </div>
+  </section>  <!-- Skills -->  <section id="skills" class="py-20 bg-slate-50/70 dark:bg-slate-900/40">
+    <div class="container-pad mx-auto max-w-7xl">
+      <h2 class="text-3xl font-extrabold tracking-tight">Skills</h2>
+      <p class="mt-3 text-slate-600 dark:text-slate-300">A balanced toolkit for modern product development.</p><div class="mt-10 grid md:grid-cols-2 gap-8">
+    <div class="space-y-5">
+      <!-- Skill item -->
+      <div>
+        <div class="flex justify-between text-sm"><span>JavaScript / TypeScript</span><span>Advanced</span></div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 mt-2">
+          <div class="h-2 w-11/12 rounded-full bg-gradient-to-r from-brand-500 to-fuchsia-500"></div>
+        </div>
+      </div>
+      <div>
+        <div class="flex justify-between text-sm"><span>Python (Flask, FastAPI)</span><span>Advanced</span></div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 mt-2">
+          <div class="h-2 w-10/12 rounded-full bg-gradient-to-r from-emerald-500 to-brand-500"></div>
+        </div>
+      </div>
+      <div>
+        <div class="flex justify-between text-sm"><span>SQL & Databases</span><span>Advanced</span></div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 mt-2">
+          <div class="h-2 w-10/12 rounded-full bg-gradient-to-r from-orange-500 to-amber-500"></div>
+        </div>
+      </div>
+      <div>
+        <div class="flex justify-between text-sm"><span>DevOps (Docker, CI/CD)</span><span>Intermediate</span></div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 mt-2">
+          <div class="h-2 w-8/12 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 content-start">
+      <span class="glass rounded-xl px-4 py-3 text-sm">React</span>
+      <span class="glass rounded-xl px-4 py-3 text-sm">Next.js</span>
+      <span class="glass rounded-xl px-4 py-3 text-sm">Tailwind</span>
+      <span class="glass rounded-xl px-4 py-3 text-sm">Flask</span>
+      <span class="glass rounded-xl px-4 py-3 text-sm">PostgreSQL</span>
+      <span class="glass rounded-xl px-4 py-3 text-sm">SQLite</span>
+      <span class="glass rounded-xl px-4 py-3 text-sm">Redis</span>
+      <span class="glass rounded-xl px-4 py-3 text-sm">Docker</span>
+      <span class="glass rounded-xl px-4 py-3 text-sm">Git</span>
+    </div>
+  </div>
+</div>
+
+  </section>  <!-- Projects -->  <section id="projects" class="py-20">
+    <div class="container-pad mx-auto max-w-7xl">
+      <div class="flex items-end justify-between gap-6 flex-wrap">
+        <div>
+          <h2 class="text-3xl font-extrabold tracking-tight">Featured Projects</h2>
+          <p class="mt-3 text-slate-600 dark:text-slate-300">Hand-picked work that showcases design, performance, and polish.</p>
+        </div>
+        <div class="flex gap-2 text-sm">
+          <button data-filter="all" class="filter-btn rounded-xl border px-4 py-2">All</button>
+          <button data-filter="web" class="filter-btn rounded-xl border px-4 py-2">Web</button>
+          <button data-filter="ml" class="filter-btn rounded-xl border px-4 py-2">ML/AI</button>
+          <button data-filter="other" class="filter-btn rounded-xl border px-4 py-2">Other</button>
+        </div>
+      </div><div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Project Card -->
+    <article data-tags="web" class="project-card group rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-soft transition">
+      <div class="relative">
+        <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=1200&auto=format&fit=crop" alt="Project screenshot">
+        <span class="absolute top-3 left-3 text-xs bg-white/80 dark:bg-slate-900/70 backdrop-blur rounded-full px-3 py-1">Next.js • Tailwind</span>
+      </div>
+      <div class="p-5">
+        <h3 class="font-bold text-lg">AgriConnect Web</h3>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">A modern platform helping farmers access market prices, advisory, and messaging.</p>
+        <div class="mt-3 flex gap-3 text-sm">
+          <a href="#" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 border">Live</a>
+          <a href="#" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 border">Code</a>
+        </div>
+      </div>
+    </article>
+
+    <article data-tags="ml" class="project-card group rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-soft transition">
+      <div class="relative">
+        <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1200&auto=format&fit=crop" alt="Project screenshot">
+        <span class="absolute top-3 left-3 text-xs bg-white/80 dark:bg-slate-900/70 backdrop-blur rounded-full px-3 py-1">Python • ML</span>
+      </div>
+      <div class="p-5">
+        <h3 class="font-bold text-lg">Crop Yield Predictor</h3>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">A regression model predicting yields using weather and soil metrics, with Flask API.</p>
+        <div class="mt-3 flex gap-3 text-sm">
+          <a href="#" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 border">Live</a>
+          <a href="#" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 border">Code</a>
+        </div>
+      </div>
+    </article>
+
+    <article data-tags="web" class="project-card group rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-soft transition">
+      <div class="relative">
+        <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=1200&auto=format&fit=crop" alt="Project screenshot">
+        <span class="absolute top-3 left-3 text-xs bg-white/80 dark:bg-slate-900/70 backdrop-blur rounded-full px-3 py-1">Flask • SQLite</span>
+      </div>
+      <div class="p-5">
+        <h3 class="font-bold text-lg">Messaging System</h3>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Real-timeish messaging with Flask, long-polling, and clean chat UI.</p>
+        <div class="mt-3 flex gap-3 text-sm">
+          <a href="#" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 border">Live</a>
+          <a href="#" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 border">Code</a>
+        </div>
+      </div>
+    </article>
+
+    <article data-tags="other" class="project-card group rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-soft transition">
+      <div class="relative">
+        <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop" alt="Project screenshot">
+        <span class="absolute top-3 left-3 text-xs bg-white/80 dark:bg-slate-900/70 backdrop-blur rounded-full px-3 py-1">CLI • Python</span>
+      </div>
+      <div class="p-5">
+        <h3 class="font-bold text-lg">ArakNet Simulation</h3>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">A toy decentralized P2P network with onion routing and file sharing.</p>
+        <div class="mt-3 flex gap-3 text-sm">
+          <a href="#" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 border">Docs</a>
+          <a href="#" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 border">Code</a>
+        </div>
+      </div>
+    </article>
+
+    <article data-tags="web" class="project-card group rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-soft transition">
+      <div class="relative">
+        <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=1200&auto=format&fit=crop" alt="Project screenshot">
+        <span class="absolute top-3 left-3 text-xs bg-white/80 dark:bg-slate-900/70 backdrop-blur rounded-full px-3 py-1">API • Dashboard</span>
+      </div>
+      <div class="p-5">
+        <h3 class="font-bold text-lg">Analytics Dashboard</h3>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Admin analytics for usage, performance, and user growth insights.</p>
+        <div class="mt-3 flex gap-3 text-sm">
+          <a href="#" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 border">Live</a>
+          <a href="#" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 border">Code</a>
+        </div>
+      </div>
+    </article>
+
+    <article data-tags="ml" class="project-card group rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-soft transition">
+      <div class="relative">
+        <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1543286386-2e659306cd6c?q=80&w=1200&auto=format&fit=crop" alt="Project screenshot">
+        <span class="absolute top-3 left-3 text-xs bg-white/80 dark:bg-slate-900/70 backdrop-blur rounded-full px-3 py-1">NLP • FastAPI</span>
+      </div>
+      <div class="p-5">
+        <h3 class="font-bold text-lg">Smart Assistant</h3>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Role-aware assistant integrated with domain data and actions.</p>
+        <div class="mt-3 flex gap-3 text-sm">
+          <a href="#" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 border">Live</a>
+          <a href="#" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 border">Code</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+
+  </section>  <!-- Experience -->  <section id="experience" class="py-20 bg-slate-50/70 dark:bg-slate-900/40">
+    <div class="container-pad mx-auto max-w-7xl">
+      <h2 class="text-3xl font-extrabold tracking-tight">Experience</h2>
+      <div class="mt-10 relative">
+        <div class="absolute left-4 top-0 bottom-0 w-px bg-slate-200 dark:bg-slate-800"></div>
+        <div class="space-y-8">
+          <!-- Timeline item -->
+          <div class="relative pl-12">
+            <span class="absolute left-0 top-1.5 inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-fuchsia-500 text-white">1</span>
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-5">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <h3 class="font-bold">Full‑Stack Developer • AgriConnect</h3>
+                <span class="text-sm text-slate-500">2024 — Present</span>
+              </div>
+              <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Built farmer advisory, messaging, and analytics modules; improved performance by 35%.</p>
+              <ul class="mt-3 text-sm list-disc pl-5 space-y-1">
+                <li>Designed robust Flask APIs and SQLite/Postgres schemas</li>
+                <li>Shipped responsive UI with Tailwind components</li>
+                <li>Implemented auth, roles, and secure file uploads</li>
+              </ul>
+            </div>
+          </div><div class="relative pl-12">
+        <span class="absolute left-0 top-1.5 inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 text-white dark:bg-white dark:text-slate-900">2</span>
+        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-5">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <h3 class="font-bold">Freelance Web Developer</h3>
+            <span class="text-sm text-slate-500">2021 — Present</span>
+          </div>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Delivered websites and dashboards for SMEs, NGOs, and startups.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </section>  <!-- Services -->  <section id="services" class="py-20">
+    <div class="container-pad mx-auto max-w-7xl">
+      <h2 class="text-3xl font-extrabold tracking-tight">What I Do</h2>
+      <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-6">
+          <div class="text-2xl">🧩</div>
+          <h3 class="mt-2 font-bold">Full‑Stack Apps</h3>
+          <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">End‑to‑end web apps from database to polished UI.</p>
+        </div>
+        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-6">
+          <div class="text-2xl">⚙️</div>
+          <h3 class="mt-2 font-bold">APIs & Integrations</h3>
+          <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Fast, well‑documented APIs with auth and monitoring.</p>
+        </div>
+        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-6">
+          <div class="text-2xl">🎨</div>
+          <h3 class="mt-2 font-bold">Design Systems</h3>
+          <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">Reusable components, consistent theming, a11y‑first.</p>
+        </div>
+      </div>
+    </div>
+  </section>  <!-- Testimonials (simple slider) -->  <section id="testimonials" class="py-20 bg-slate-50/70 dark:bg-slate-900/40">
+    <div class="container-pad mx-auto max-w-5xl">
+      <h2 class="text-3xl font-extrabold tracking-tight text-center">Kind words</h2>
+      <div class="relative mt-10 overflow-hidden">
+        <div id="slider" class="flex transition-transform duration-500">
+          <div class="min-w-full px-6">
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-6 text-center">
+              <p class="text-lg">“An exceptional developer with a strong eye for detail. Delivery was on time and beyond expectations.”</p>
+              <div class="mt-3 text-sm text-slate-500">— A Happy Client</div>
+            </div>
+          </div>
+          <div class="min-w-full px-6">
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-6 text-center">
+              <p class="text-lg">“Great communication and technical chops. Highly recommended.”</p>
+              <div class="mt-3 text-sm text-slate-500">— Startup Founder</div>
+            </div>
+          </div>
+          <div class="min-w-full px-6">
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-6 text-center">
+              <p class="text-lg">“Turned vague ideas into a polished product with measurable impact.”</p>
+              <div class="mt-3 text-sm text-slate-500">— NGO Partner</div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-6 flex justify-center gap-2">
+          <button class="dot h-2 w-2 rounded-full bg-slate-400" aria-label="Slide 1"></button>
+          <button class="dot h-2 w-2 rounded-full bg-slate-300" aria-label="Slide 2"></button>
+          <button class="dot h-2 w-2 rounded-full bg-slate-300" aria-label="Slide 3"></button>
+        </div>
+      </div>
+    </div>
+  </section>  <!-- Contact -->  <section id="contact" class="py-20">
+    <div class="container-pad mx-auto max-w-5xl">
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="text-3xl font-extrabold tracking-tight">Let's build something</h2>
+        <p class="mt-3 text-slate-600 dark:text-slate-300">Tell me about your project and I'll reply within 24 hours.</p>
+      </div><div class="mt-10 grid md:grid-cols-2 gap-8">
+    <form id="contactForm" class="rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-4">
+      <div>
+        <label class="text-sm" for="name">Name</label>
+        <input id="name" type="text" class="mt-1 w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3" placeholder="Your full name" required />
+      </div>
+      <div>
+        <label class="text-sm" for="email">Email</label>
+        <input id="email" type="email" class="mt-1 w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3" placeholder="you@example.com" required />
+      </div>
+      <div>
+        <label class="text-sm" for="message">Message</label>
+        <textarea id="message" rows="5" class="mt-1 w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3" placeholder="What are you looking to build?" required></textarea>
+      </div>
+      <button class="w-full rounded-xl bg-brand-600 text-white px-5 py-3 font-semibold shadow-soft">Send Message</button>
+      <p id="formStatus" class="text-sm text-center text-emerald-600 hidden">Thanks! Your message has been prepared.</p>
+    </form>
+
+    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-5">
+      <div class="flex items-center gap-3"><span class="text-2xl">📧</span><div>
+        <div class="text-sm text-slate-500">Email</div><a class="font-medium" href="mailto:you@example.com">chikusehopeson@gmail.com</a></div></div>
+      <div class="flex items-center gap-3"><span class="text-2xl">📍</span><div>
+        <div class="text-sm text-slate-500">Location</div><div class="font-medium">Lilongwe, Malawi</div></div></div>
+      <div class="flex items-center gap-3"><span class="text-2xl">🌐</span><div>
+        <div class="text-sm text-slate-500">Social</div>
+        <div class="flex gap-3 mt-1">
+          <a class="rounded-lg border px-3 py-1 itext-sm" href="https://github.com/phantommind265">GitHub</a>
+          <a class="rounded-lg border px-3 py-1 text-sm" href="https://www.linkedin.com/in/hopeson-chikuse-a87b8361?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">LinkedIn</a>
+          <a class="rounded-lg border px-3 py-1 text-sm" href="https://x.com/Hopeson28731?s=09">Twitter</a>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+  </section>  <!-- Footer -->  <footer class="py-10 border-t border-slate-200 dark:border-slate-800">
+    <div class="container-pad mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500">
+      <div>© <span id="year"></span> Hopeson Chikuse. All rights reserved.</div>
+      <div class="flex items-center gap-4">
+        <a href="#home" class="rounded-lg border px-3 py-1">Back to top</a>
+        <a href="#contact" class="rounded-lg border px-3 py-1">Contact</a>
+      </div>
+    </div>
+  </footer>  <!-- Scroll to top button -->  <button id="toTop" class="fixed bottom-6 right-6 hidden rounded-full bg-slate-900 text-white dark:bg-white dark:text-slate-900 p-3 shadow-soft" aria-label="Scroll to top">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 5.5a1 1 0 0 1 .894.553l5 10a1 1 0 0 1-1.788.894L12 7.618 6.894 16.947a1 1 0 1 1-1.788-.894l5-10A1 1 0 0 1 12 5.5Z"/></svg>
+  </button>  <script>
+    // Theme handling
+    const root = document.documentElement;
+    const themePref = localStorage.getItem('theme');
+    const setTheme = (mode) => {
+      if (mode === 'dark') root.classList.add('dark'); else root.classList.remove('dark');
+      localStorage.setItem('theme', mode);
+      document.getElementById('themeIcon').innerHTML = mode === 'dark'
+        ? '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M21.64 13a9 9 0 1 1-10.62-10.6 1 1 0 0 1 1.11 1.45 7 7 0 1 0 8.65 8.64 1 1 0 0 1 1.45 1.11Z"/></svg>'
+        : '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1Zm0 16a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1Zm10-7a1 1 0 0 1-1 1h-2a1 1 0 1 1 0-2h2a1 1 0 0 1 1 1ZM7 12a1 1 0 0 1-1 1H4a1 1 0 1 1 0-2h2a1 1 0 0 1 1 1Zm10.657-6.243a1 1 0 0 1 0 1.414L16.1 8.728a1 1 0 0 1-1.415-1.415l1.557-1.556a1 1 0 0 1 1.415 0ZM9.314 16.97a1 1 0 0 1 0 1.415L7.757 19.94a1 1 0 0 1-1.414-1.415l1.556-1.557a1 1 0 0 1 1.415 0Zm10.626 1.556a1 1 0 0 1-1.415 0l-1.556-1.558A1 1 0 0 1 18.98 14.55l1.558 1.558a1 1 0 0 1 0 1.415ZM6.343 5.757a1 1 0 0 1 0 1.414L4.787 8.728A1 1 0 0 1 3.372 7.313L4.93 5.757A1 1 0 0 1 6.343 5.757Z"/></svg>';
+    };
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setTheme(themePref || (prefersDark ? 'dark' : 'light'));
+    document.getElementById('themeToggle')?.addEventListener('click', () => setTheme(root.classList.contains('dark') ? 'light' : 'dark'));
+    document.getElementById('themeToggleM')?.addEventListener('click', () => setTheme(root.classList.contains('dark') ? 'light' : 'dark'));
+
+    // Mobile menu toggle
+    const mobileToggle = document.getElementById('mobileToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const navMenu = document.getElementById('navMenu');
+    mobileToggle?.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    mobileMenu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+    // Scroll spy / active links
+    const links = document.querySelectorAll('.nav-link');
+    const sections = [...links].map(l => document.querySelector(l.getAttribute('href')));
+    const activate = (id) => { links.forEach(l => l.classList.toggle('text-brand-600', l.getAttribute('href') === id)); };
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) activate(`#${entry.target.id}`); });
+    }, { rootMargin: '-50% 0px -45% 0px' });
+    sections.forEach(sec => sec && obs.observe(sec));
+
+    // Projects filter
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.project-card');
+    filterBtns.forEach(btn => btn.addEventListener('click', () => {
+      const f = btn.dataset.filter;
+      filterBtns.forEach(b => b.classList.toggle('bg-slate-900 text-white dark:bg-white dark:text-slate-900', b===btn));
+      cards.forEach(c => {
+        const tags = (c.dataset.tags || '').split(',');
+        const show = f === 'all' || tags.includes(f);
+        c.classList.toggle('hidden', !show);
+      });
+    }));
+
+    // Testimonials slider
+    const slider = document.getElementById('slider');
+    const dots = document.querySelectorAll('.dot');
+    let slide = 0;
+    const go = (i) => { slide = i; slider.style.transform = `translateX(-${i*100}%)`; dots.forEach((d,idx)=>d.className = `dot h-2 w-2 rounded-full ${idx===i? 'bg-slate-400':'bg-slate-300'}`); };
+    dots.forEach((d, idx) => d.addEventListener('click', () => go(idx)));
+    setInterval(() => go((slide+1)%dots.length), 6000);
+
+    // Contact form (client-side only)
+    const form = document.getElementById('contactForm');
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const msg = document.getElementById('message').value.trim();
+      if (!name || !email || !msg) return;
+      const mailto = `mailto:chikusehopeson@gmail.com?subject=Project Inquiry from ${encodeURIComponent(name)}&body=${encodeURIComponent(msg + '\n\nFrom: ' + name + ' <' + email + '>')}`;
+      document.getElementById('formStatus').classList.remove('hidden');
+      window.location.href = mailto;
+    });
+
+    // Year and scroll to top
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => {
+      toTop.classList.toggle('hidden', window.scrollY < 400);
+    });
+    toTop.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
+  </script></body>
+</html>
